@@ -1,39 +1,39 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+🔥 API Gateway bây giờ hỗ trợ đầy đủ tất cả các phương thức HTTP:
+✅ GET - Lấy dữ liệu
+✅ POST - Gửi dữ liệu
+✅ PUT - Cập nhật dữ liệu
+✅ DELETE - Xóa dữ liệu
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+🔥 Các tính năng nâng cao:
+✅ Xác thực & Ủy quyền (JWT, OAuth2)
+✅ Rate Limiting
+✅ Caching
+✅ Logging Request/Response
+✅ Retry khi gặp lỗi tạm thời
+✅ Tracking API Events
+✅ Theo dõi số lần request thất bại liên tiếp
+✅ Tự động chặn request khi lỗi vượt quá ngưỡng cho phép
+✅ Tự động mở lại sau thời gian cooldown
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+# Sử dụng ApiGateway
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+`
+final apiGateway = ApiGateway(
+  getAccessToken: () async => "your_access_token",
+  refreshAccessToken: () async => "new_access_token",
+  failureThreshold: 3,  // Sau 3 lần lỗi liên tiếp, circuit breaker sẽ mở
+  circuitResetTimeout: Duration(seconds: 30),  // Sau 30s, circuit breaker sẽ reset
+  onTrack: (event, data) {
+    print("📊 Tracking Event: $event - $data");
+  }
+);
 
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
-```
-
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+void main() async {
+  try {
+    final response = await apiGateway.get("https://api.example.com/data");
+    print("✅ Data: ${response.data}");
+  } catch (e) {
+    print("❌ Error: $e");
+  }
+}
+`

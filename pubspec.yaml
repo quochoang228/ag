@@ -11,10 +11,17 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+    
+  dio_cache_interceptor: ^3.5.1
 
   logs:
     git:
       url: https://github.com/quochoang228/logs.git
+      ref: main
+
+  pub:
+    git:
+      url: https://github.com/quochoang228/pub.git
       ref: main
 
 dev_dependencies:
