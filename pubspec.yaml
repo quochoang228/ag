@@ -12,7 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
     
-  dio_cache_interceptor: ^3.5.1
+  # dio_cache_interceptor: ^3.5.1
+
+  web: ^1.1.0
 
   logs:
     git:
