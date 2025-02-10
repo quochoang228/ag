@@ -1,5 +1,8 @@
-import 'package:pub/pub.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:dio/dio.dart';
+
 import 'ag.dart';
+import 'src/interceptor/curl_interceptor.dart';
 
 /// ApiGateway handles HTTP requests with built-in interceptors for auth, caching
 /// rate limiting, circuit breaking, and request tracking.
@@ -21,6 +24,7 @@ class ApiGateway {
         _eventTracker = EventTracker(onTrack: onTrack) {
     _dio.interceptors.addAll(
       [
+        CurlLoggerDioInterceptor(),
         LoggingInterceptor(),
         AuthInterceptor(
           getAccessToken: getAccessToken,

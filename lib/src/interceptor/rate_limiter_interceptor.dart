@@ -1,5 +1,6 @@
 
-import 'package:pub/pub.dart';
+
+import 'package:dio/dio.dart';
 
 import '../utils/rate_limiter.dart';
 

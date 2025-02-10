@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:pub/pub.dart';
+import 'package:dio/dio.dart';
 
 class CircuitBreakerInterceptor extends Interceptor {
   final int failureThreshold;

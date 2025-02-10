@@ -1,5 +1,5 @@
+import 'package:dio/dio.dart';
 import 'package:logs/logs.dart';
-import 'package:pub/pub.dart';
 
 class LoggingInterceptor extends Interceptor {
   DateTime? startTime;

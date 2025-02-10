@@ -1,5 +1,4 @@
-
-import 'package:pub/pub.dart';
+import 'package:dio/dio.dart';
 
 class AuthInterceptor extends Interceptor {
   final Future<String?> Function() getAccessToken;

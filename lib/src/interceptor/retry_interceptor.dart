@@ -1,6 +1,5 @@
+import 'package:dio/dio.dart';
 import 'package:logs/logs.dart';
-import 'package:pub/pub.dart';
-
 class RetryInterceptor extends Interceptor {
   final Dio dio;
   final int maxRetries;

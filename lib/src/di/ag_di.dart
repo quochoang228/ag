@@ -1,4 +1,5 @@
-import 'package:pub/pub.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:get_it/get_it.dart';
 
 import '../../api_gateway.dart';
 

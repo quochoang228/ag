@@ -1,4 +1,5 @@
-import 'package:pub/pub.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:dio/dio.dart';
 
 class ConnectivityInterceptor extends Interceptor {
   final Connectivity _connectivity;

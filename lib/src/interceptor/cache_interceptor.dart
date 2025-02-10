@@ -1,5 +1,4 @@
-
-import 'package:pub/pub.dart';
+import 'package:dio/dio.dart';
 
 import '../utils/cache_manager.dart';
 
