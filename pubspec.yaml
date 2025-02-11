@@ -23,11 +23,6 @@ dependencies:
       url: https://github.com/quochoang228/logs.git
       ref: main
 
-  # pub:
-  #   git:
-  #     url: https://github.com/quochoang228/pub.git
-  #     ref: main
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

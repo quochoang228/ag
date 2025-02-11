@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:pub/pub.dart';
+import 'package:dio/dio.dart';
 
 class CacheManager {
   final Map<String, Response> _cache = HashMap<String, Response>();
