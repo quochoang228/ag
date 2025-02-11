@@ -1,8 +1,8 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 
-import 'ag.dart';
-import 'src/interceptor/curl_interceptor.dart';
+import '../ag.dart';
+import 'interceptor/curl_interceptor.dart';
 
 /// ApiGateway handles HTTP requests with built-in interceptors for auth, caching
 /// rate limiting, circuit breaking, and request tracking.
@@ -13,6 +13,7 @@ class ApiGateway {
   ApiGateway({
     required Future<String?> Function() getAccessToken,
     required Connectivity connectivity,
+    required Dio dio,
     required void Function(String event, Map<String, dynamic> data) onTrack,
     Future<String?> Function()? refreshAccessToken,
     int? maxRequests = 10,
@@ -20,7 +21,7 @@ class ApiGateway {
     Duration? cacheDuration = const Duration(minutes: 5),
     int? failureThreshold = 3,
     Duration? circuitResetTimeout = const Duration(seconds: 30),
-  })  : _dio = Dio(),
+  })  : _dio = dio,
         _eventTracker = EventTracker(onTrack: onTrack) {
     _dio.interceptors.addAll(
       [

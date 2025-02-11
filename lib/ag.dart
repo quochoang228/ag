@@ -9,4 +9,4 @@ export 'src/interceptor/retry_interceptor.dart';
 export 'src/utils/cache_manager.dart';
 export 'src/utils/event_tracker.dart';
 export 'src/utils/rate_limiter.dart';
-export 'api_gateway.dart';
+export 'src/api_gateway.dart';

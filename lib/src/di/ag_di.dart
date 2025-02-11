@@ -1,7 +1,8 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 
-import '../../api_gateway.dart';
+import '../api_gateway.dart';
 
 class AgDi {
   // Khởi tạo GetIt
@@ -11,6 +12,7 @@ class AgDi {
     required Future<String?> Function() getAccessToken,
     required Connectivity connectivity,
     required void Function(String event, Map<String, dynamic> data) onTrack,
+    required Dio dio,
     Future<String?> Function()? refreshAccessToken,
     int? maxRequests,
     Duration? rateLimitDuration,
@@ -20,6 +22,7 @@ class AgDi {
   }) {
     getIt.registerLazySingleton<ApiGateway>(
       () => ApiGateway(
+        dio: dio,
         getAccessToken: getAccessToken,
         connectivity: connectivity,
         onTrack: onTrack,
