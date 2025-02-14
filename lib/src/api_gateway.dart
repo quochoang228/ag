@@ -31,17 +31,17 @@ class ApiGateway {
           getAccessToken: getAccessToken,
           refreshAccessToken: refreshAccessToken,
         ),
-        RateLimiterInterceptor(
-          maxRequests: maxRequests!,
-          duration: rateLimitDuration!,
-        ),
-        CacheInterceptor(cacheDuration: cacheDuration!),
-        RetryInterceptor(dio: _dio),
-        CircuitBreakerInterceptor(
-          failureThreshold: failureThreshold!,
-          resetTimeout: circuitResetTimeout!,
-        ),
-        ConnectivityInterceptor(connectivity),
+        // RateLimiterInterceptor(
+        //   maxRequests: maxRequests!,
+        //   duration: rateLimitDuration!,
+        // ),
+        // CacheInterceptor(cacheDuration: cacheDuration!),
+        // RetryInterceptor(dio: _dio),
+        // CircuitBreakerInterceptor(
+        //   failureThreshold: failureThreshold!,
+        //   resetTimeout: circuitResetTimeout!,
+        // ),
+        // ConnectivityInterceptor(connectivity),
       ],
     );
   }
