@@ -14,6 +14,7 @@ class ApiGateway {
     required Future<String?> Function() getAccessToken,
     required Connectivity connectivity,
     required Dio dio,
+    required Function() onTokenExpired,
     required void Function(String event, Map<String, dynamic> data) onTrack,
     Future<String?> Function()? refreshAccessToken,
     int? maxRequests = 10,
@@ -30,6 +31,7 @@ class ApiGateway {
         AuthInterceptor(
           getAccessToken: getAccessToken,
           refreshAccessToken: refreshAccessToken,
+          onTokenExpired: onTokenExpired,
         ),
         // RateLimiterInterceptor(
         //   maxRequests: maxRequests!,
@@ -44,6 +46,16 @@ class ApiGateway {
         // ConnectivityInterceptor(connectivity),
       ],
     );
+  }
+
+  Future<void> setToken(String newToken) async {
+    // Update the token in the interceptors if necessary
+    // For example, if you have an AuthInterceptor, you might need to update it
+    for (var interceptor in _dio.interceptors) {
+      if (interceptor is AuthInterceptor) {
+        interceptor.updateToken(newToken);
+      }
+    }
   }
 
   /// Generic method to handle HTTP requests and track events

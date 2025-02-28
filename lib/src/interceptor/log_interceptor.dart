@@ -84,7 +84,7 @@ class LoggingInterceptor extends Interceptor {
     DioException err,
     ErrorInterceptorHandler handler,
   ) {
-    LogUtils.e(
+    LogUtils.d(
       '------------------- Error -------------------',
       tag: httpTAG,
     );

@@ -13,6 +13,7 @@ class AgDi {
     required Connectivity connectivity,
     required void Function(String event, Map<String, dynamic> data) onTrack,
     required Dio dio,
+    required Function() onTokenExpired,
     Future<String?> Function()? refreshAccessToken,
     int? maxRequests,
     Duration? rateLimitDuration,
@@ -24,6 +25,7 @@ class AgDi {
       () => ApiGateway(
         dio: dio,
         getAccessToken: getAccessToken,
+        onTokenExpired: onTokenExpired,
         connectivity: connectivity,
         onTrack: onTrack,
         cacheDuration: cacheDuration,
