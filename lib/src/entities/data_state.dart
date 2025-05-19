@@ -40,8 +40,43 @@ sealed class DataState<T, E> {
       Fetched<T> s => fetched(s),
       NoData<T> s => noData(s),
       Failed<E> s => failed(s),
-    // Nếu Dart vẫn phàn nàn về exhaustiveness, thêm trường hợp mặc định
+      // Nếu Dart vẫn phàn nàn về exhaustiveness, thêm trường hợp mặc định
       _ => throw UnimplementedError('Trạng thái không được xử lý: $self'),
+    };
+  }
+
+  /// Getter để lấy dữ liệu, chỉ hợp lệ nếu trạng thái là `Fetched`
+  T? get data {
+    if (this is Fetched<T>) {
+      return (this as Fetched<T>).data;
+    }
+    return null;
+    // throw StateError("Không thể lấy dữ liệu từ trạng thái $runtimeType");
+  }
+
+  /// Getter để lấy lỗi, chỉ hợp lệ nếu trạng thái là `Failed`
+  E get error {
+    if (this is Failed<E>) {
+      return (this as Failed<E>).err;
+    }
+    throw StateError("Không thể lấy lỗi từ trạng thái $runtimeType");
+  }
+
+  /// Phương thức `when()` để xử lý trạng thái một cách linh hoạt hơn
+  R when<R>({
+    R Function()? notLoaded,
+    R Function()? loading,
+    required R Function(T data) fetched,
+    R Function()? noData,
+    required R Function(E error) failed,
+  }) {
+    return switch (this) {
+      NotLoaded<T> _ => notLoaded?.call() ?? (throw UnimplementedError()),
+      Loading<T> _ => loading?.call() ?? (throw UnimplementedError()),
+      Fetched<T> s => fetched(s.data),
+      NoData<T> _ => noData?.call() ?? (throw UnimplementedError()),
+      Failed<E> s => failed(s.err),
+      _ => throw UnimplementedError('Trạng thái không được xử lý: $this'),
     };
   }
 }
@@ -60,6 +95,7 @@ class Loading<T> extends DataState<T, Never> {
 class Fetched<T> extends DataState<T, Never> {
   Fetched(this.data) : super(state: CurrentDataState.fetched);
 
+  @override
   final T data;
 
   T get value => data;
@@ -76,82 +112,6 @@ class Failed<E> extends DataState<Never, E> {
 
   final E err;
 
+  @override
   E get error => err;
 }
-
-
-
-///--------------
-
-
-// sealed class DataSate<T> {
-//   DataSate({required this.state, this.error, this.valueOrNull});
-//
-//   T? valueOrNull;
-//   Object? error;
-//   CurrentDataState state;
-//
-//   T get value => valueOrNull!;
-//
-//   R onState<R>({
-//     required R Function() notLoaded,
-//     required R Function() loading,
-//     required R Function(T data) fetched,
-//     required R Function() noData,
-//     required R Function(Object error) failed,
-//   }) {
-//     if (state.isNotLoaded) {
-//       return notLoaded();
-//     } else if (state.isLoading) {
-//       return loading();
-//     } else if (state.isFetched) {
-//       return fetched(valueOrNull as T);
-//     }  else if (state.isNoData) {
-//       return noData();
-//     } else {
-//       return failed(error!);
-//     }
-//   }
-// }
-//
-// class NotLoaded<T> extends DataSate<T> {
-//   NotLoaded() : super(state: CurrentDataState.notLoaded);
-// }
-//
-// class Loading<T> extends DataSate<T> {
-//   Loading() : super(state: CurrentDataState.loading);
-// }
-//
-// class Fetched<T> extends DataSate<T> {
-//   final T data;
-//
-//   Fetched(this.data) : super(state: CurrentDataState.fetched, valueOrNull: data);
-// }
-//
-// class NoData<T> extends DataSate<T> {
-//   NoData() : super(state: CurrentDataState.noData);
-// }
-//
-// class Failed<T> extends DataSate<T> {
-//   final Object err;
-//
-//   Failed(this.err) : super(state: CurrentDataState.failed, error: err);
-// }
-//
-// enum CurrentDataState {
-//   notLoaded,
-//   loading,
-//   fetched,
-//   noData,
-//   failed;
-//
-//   bool get isNotLoaded => this == CurrentDataState.notLoaded;
-//
-//   bool get isLoading => this == CurrentDataState.loading;
-//
-//   bool get isFetched => this == CurrentDataState.fetched;
-//
-//   bool get isNoData => this == CurrentDataState.noData;
-//
-//   bool get isFailed => this == CurrentDataState.failed;
-// }
